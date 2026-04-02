@@ -167,7 +167,6 @@ int main(void)
   CAN_Init
 
 
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
