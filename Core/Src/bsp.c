@@ -23,6 +23,20 @@ uint8_t JScope_RTT_UpBuffer[BUFFER_SIZE_UP] = {0};
 
 
 /* 接口定义 --------------------------------------------------------------------*/
+// 调试串口
+UART_DRIVES user_lp_uart= {0};
+UART_DRIVES user_stp1_uart = {0};
+UART_DRIVES user_stp2_uart = {0};
+UART_DRIVES user_stp3_uart = {0};
+UART_DRIVES user_stp4_uart = {0};
+UART_DRIVES user_stp5_uart = {0};
+UART_DRIVES user_stp6_uart = {0};
+UART_DRIVES user_stp7_uart = {0};
+UART_DRIVES user_stp8_uart = {0};;
+//激光
+STP23_DRIVES user_stp23_num[8] = {0};
 
+//避障 = {0}
+DistanceControl user_distance_control = {0};
 
 

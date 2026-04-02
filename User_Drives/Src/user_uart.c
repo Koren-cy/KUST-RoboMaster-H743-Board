@@ -248,5 +248,8 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     }
 }
 
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
+    HAL_UART_Transmit(huart, "hello", strlen("hello"), 100);
+}
 #endif /* HAL_UART_MODULE_ENABLED */
 

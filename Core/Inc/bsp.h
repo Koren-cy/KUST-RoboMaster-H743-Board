@@ -23,7 +23,27 @@ extern uint8_t JScope_RTT_UpBuffer[BUFFER_SIZE_UP];
 #endif /* HAL_TIM_MODULE_ENABLED */
 
 /* 接口定义 ------------------------------------------------------------------*/
+// 调试串口
+#include "../../User_Drives/user_uart.h"
+extern UART_DRIVES user_lp_uart;
+extern UART_DRIVES user_stp1_uart;
+extern UART_DRIVES user_stp2_uart;
+extern UART_DRIVES user_stp3_uart;
+extern UART_DRIVES user_stp4_uart;
+extern UART_DRIVES user_stp5_uart;
+extern UART_DRIVES user_stp6_uart;
+extern UART_DRIVES user_stp7_uart;
+extern UART_DRIVES user_stp8_uart;
 
+
+//激光模块
+#include "../../User_Drives/user_stp23.h"
+extern STP23_DRIVES user_stp23_num[8];
+
+
+
+#include "../../User_Algorithm/user_distance_control.h"
+extern DistanceControl user_distance_control;
 
 
 

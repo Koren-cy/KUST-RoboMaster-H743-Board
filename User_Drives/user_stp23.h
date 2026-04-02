@@ -12,6 +12,7 @@
 #define STP23_SAMPLE_NUM      (12)      /* STP23 数据帧长度 */
 
 /* 类型定义 ------------------------------------------------------------------*/
+extern float delta_angle_fortest;
 
 /**
 * @brief ADC 转换完成回调函数类型
@@ -31,11 +32,14 @@ typedef struct {
     uint8_t rx_buffer[STP23_DATA_FRAME_LEN];          /* 接收数据缓冲区 */
     STP23_Callback callbacks[STP23_CALLBACK_NUM];     /* 转换完成回调函数数组 */
     uint8_t callback_num;                             /* 已注册的回调函数数量 */
+    uint8_t id;
 } STP23_DRIVES;
 
 /* 函数声明 ------------------------------------------------------------------*/
-void STP23_Init(STP23_DRIVES *user_stp23, UART_DRIVES* user_uart);
+void STP23_Init(STP23_DRIVES *user_stp23, UART_DRIVES* user_uart, uint8_t id);
 void STP23_RegisterCallback(STP23_DRIVES* user_stp23, STP23_Callback callback);
+void Stp_To_Circle(void* user_stp23);
+
 
 #endif /* HAL_UART_MODULE_ENABLED */
 #endif // USER_STP23_H
