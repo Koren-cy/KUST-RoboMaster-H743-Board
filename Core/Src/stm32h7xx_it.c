@@ -228,6 +228,8 @@ void SysTick_Handler(void)
     }
   }
 
+  CAN_Send();
+
 
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();

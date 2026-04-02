@@ -4,7 +4,7 @@
 /* 包含头文件 ----------------------------------------------------------------*/
 #include "main.h"
 #include "../../SEGGER_RTT/SEGGER_RTT.h"
-
+#include"../../User_Drives/user_can.h"
 /* 全局注册表 ----------------------------------------------------------------*/
 #define MAX_LOOP_EVENT 32
 void LOOP_EVENT_Handle(void);
@@ -35,6 +35,7 @@ extern UART_DRIVES user_stp6_uart;
 extern UART_DRIVES user_stp7_uart;
 extern UART_DRIVES user_stp8_uart;
 
+extern
 
 //激光模块
 #include "../../User_Drives/user_stp23.h"
