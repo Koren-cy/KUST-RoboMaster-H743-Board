@@ -33,8 +33,14 @@ UART_DRIVES user_stp5_uart = {0};
 UART_DRIVES user_stp6_uart = {0};
 UART_DRIVES user_stp7_uart = {0};
 UART_DRIVES user_stp8_uart = {0};;
+UART_DRIVES user_stp_uarts[9] = {0};
+
 //激光
 STP23_DRIVES user_stp23_num[8] = {0};
+
+// CAN
+CAN_DRIVES user_can_1 = {0};
+CAN_DRIVES user_can_2 = {0};
 
 //避障 = {0}
 DistanceControl user_distance_control = {0};

@@ -1,12 +1,12 @@
 #ifndef USER_DJI_MOTOR_H
 #define USER_DJI_MOTOR_H
 #include "main.h"
-#ifdef HAL_CAN_MODULE_ENABLED
+#ifdef HAL_FDCAN_MODULE_ENABLED
 
 /* 包含头文件 ----------------------------------------------------------------*/
 #include "user_motor.h"
 #include "../../Core/Inc/bsp_config.h"
-#include "../user_can.h"
+#include "../user_fdcan.h"
 #include "../../User_Algorithm/User_Controller/user_controller.h"
 
 /* 宏定义 --------------------------------------------------------------------*/
@@ -86,5 +86,5 @@ float DJI_Motor_Get_Speed(void* motor);
 float DJI_Motor_Get_Angle(void* motor);
 float DJI_Motor_Get_Current(void* motor);
 
-#endif /* HAL_CAN_MODULE_ENABLED */
+#endif /* HAL_FDCAN_MODULE_ENABLED */
 #endif // USER_DJI_MOTOR_H

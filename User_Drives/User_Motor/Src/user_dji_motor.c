@@ -1,5 +1,5 @@
 #include "../../Core/Inc/bsp.h"
-#ifdef HAL_CAN_MODULE_ENABLED
+#ifdef HAL_FDCAN_MODULE_ENABLED
 /* 包含头文件 ----------------------------------------------------------------*/
 #include <math.h>
 #include "../user_dji_motor.h"
@@ -70,7 +70,7 @@ void DJI_Motor_Init(DJI_MOTOR_DRIVES *user_motor, CAN_DRIVES* user_can, const ui
     uint8_t is_callback_register = 0;
     for (uint8_t motor_index = 0; motor_index < motor_num; motor_index++) {
         const DJI_MOTOR_DRIVES *motor = motor_drives[motor_index];
-        if (motor->can->hcan == user_can->hcan)
+        if (motor->can->hfdcan == user_can->hfdcan)
             is_callback_register = 1;
     }
 
@@ -92,7 +92,7 @@ static void DJI_Motor_Handle(void* user_can) {
     for (uint8_t motor_index = 0; motor_index < motor_num; motor_index++) {
         DJI_MOTOR_DRIVES *motor = motor_drives[motor_index];
 
-        if (motor->can->hcan != can->hcan || motor->fdb_id != can->rx_msg.StdId)
+        if (motor->can->hfdcan != can->hfdcan || motor->fdb_id != can->rx_msg.Identifier)
             continue;
 
         const uint16_t last_rotor_angle = motor->rotor_angle;
@@ -258,4 +258,4 @@ float DJI_Motor_Get_Current(void* motor) {
     return (float)dji_motor->torque_current / 16384.0f * 3000.0f;
 }
 
-#endif /* HAL_CAN_MODULE_ENABLED */
+#endif /* HAL_FDCAN_MODULE_ENABLED */

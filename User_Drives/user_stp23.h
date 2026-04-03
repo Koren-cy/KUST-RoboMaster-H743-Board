@@ -33,6 +33,7 @@ typedef struct {
     STP23_Callback callbacks[STP23_CALLBACK_NUM];     /* 转换完成回调函数数组 */
     uint8_t callback_num;                             /* 已注册的回调函数数量 */
     uint8_t id;
+    uint16_t zero_times;
 } STP23_DRIVES;
 
 /* 函数声明 ------------------------------------------------------------------*/

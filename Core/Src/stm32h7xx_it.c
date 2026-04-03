@@ -55,8 +55,10 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern DMA_HandleTypeDef hdma_lpuart1_tx;
+extern FDCAN_HandleTypeDef hfdcan1;
+extern FDCAN_HandleTypeDef hfdcan2;
 extern DMA_HandleTypeDef hdma_lpuart1_rx;
+extern DMA_HandleTypeDef hdma_lpuart1_tx;
 extern DMA_HandleTypeDef hdma_uart4_rx;
 extern DMA_HandleTypeDef hdma_uart4_tx;
 extern DMA_HandleTypeDef hdma_uart5_rx;
@@ -82,6 +84,8 @@ extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart3;
 extern UART_HandleTypeDef huart6;
+extern UART_HandleTypeDef huarts[9];
+
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -209,6 +213,20 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
+  //检测串口是否有数据
+  for (uint8_t i = 0; i < 8; i++) {
+    if (user_stp23_num[i].rx_buffer[0] == 0 || user_stp23_num[i].rx_buffer[25] == 0) {
+      user_stp23_num[i].zero_times++;
+      if (user_stp23_num[i].zero_times == 3000) {
+        user_stp23_num[i].zero_times = 0;
+        UART_Init(&user_stp_uarts[i], &huarts[i]);
+        STP23_Init(&user_stp23_num[i],&user_stp_uarts[i],user_stp23_num[i].id);
+      }
+    }
+
+  }
+
+
   delta_angle_fortest += 0.5f;
   if (delta_angle_fortest >= 370.0f) {
     delta_angle_fortest = 0.0f;
@@ -227,8 +245,6 @@ void SysTick_Handler(void)
       HAL_UART_Transmit(&hlpuart1, &dis, 1, 1000);
     }
   }
-
-  CAN_Send();
 
 
   /* USER CODE END SysTick_IRQn 0 */
@@ -341,6 +357,34 @@ void DMA1_Stream6_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Stream6_IRQn 1 */
 
   /* USER CODE END DMA1_Stream6_IRQn 1 */
+}
+
+/**
+  * @brief This function handles FDCAN2 interrupt 0.
+  */
+void FDCAN2_IT0_IRQHandler(void)
+{
+  /* USER CODE BEGIN FDCAN2_IT0_IRQn 0 */
+
+  /* USER CODE END FDCAN2_IT0_IRQn 0 */
+  HAL_FDCAN_IRQHandler(&hfdcan2);
+  /* USER CODE BEGIN FDCAN2_IT0_IRQn 1 */
+
+  /* USER CODE END FDCAN2_IT0_IRQn 1 */
+}
+
+/**
+  * @brief This function handles FDCAN2 interrupt 1.
+  */
+void FDCAN2_IT1_IRQHandler(void)
+{
+  /* USER CODE BEGIN FDCAN2_IT1_IRQn 0 */
+
+  /* USER CODE END FDCAN2_IT1_IRQn 0 */
+  HAL_FDCAN_IRQHandler(&hfdcan2);
+  /* USER CODE BEGIN FDCAN2_IT1_IRQn 1 */
+
+  /* USER CODE END FDCAN2_IT1_IRQn 1 */
 }
 
 /**
@@ -498,6 +542,21 @@ void DMA2_Stream4_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles FDCAN calibration unit interrupt.
+  */
+void FDCAN_CAL_IRQHandler(void)
+{
+  /* USER CODE BEGIN FDCAN_CAL_IRQn 0 */
+
+  /* USER CODE END FDCAN_CAL_IRQn 0 */
+  HAL_FDCAN_IRQHandler(&hfdcan1);
+  HAL_FDCAN_IRQHandler(&hfdcan2);
+  /* USER CODE BEGIN FDCAN_CAL_IRQn 1 */
+
+  /* USER CODE END FDCAN_CAL_IRQn 1 */
+}
+
+/**
   * @brief This function handles DMA2 stream5 global interrupt.
   */
 void DMA2_Stream5_IRQHandler(void)
@@ -589,7 +648,7 @@ void BDMA_Channel0_IRQHandler(void)
   /* USER CODE BEGIN BDMA_Channel0_IRQn 0 */
 
   /* USER CODE END BDMA_Channel0_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_lpuart1_tx);
+  HAL_DMA_IRQHandler(&hdma_lpuart1_rx);
   /* USER CODE BEGIN BDMA_Channel0_IRQn 1 */
 
   /* USER CODE END BDMA_Channel0_IRQn 1 */
@@ -603,7 +662,7 @@ void BDMA_Channel1_IRQHandler(void)
   /* USER CODE BEGIN BDMA_Channel1_IRQn 0 */
 
   /* USER CODE END BDMA_Channel1_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_lpuart1_rx);
+  HAL_DMA_IRQHandler(&hdma_lpuart1_tx);
   /* USER CODE BEGIN BDMA_Channel1_IRQn 1 */
 
   /* USER CODE END BDMA_Channel1_IRQn 1 */
